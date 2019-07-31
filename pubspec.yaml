@@ -1,0 +1,12 @@
+name: stratis_flutter
+description: A plugin that communicates with the Stratis daemon over D-Bus.
+version: 0.0.1
+author: Carmine Zaccagnino
+homepage: stratisflutter.carminezacc.com
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
