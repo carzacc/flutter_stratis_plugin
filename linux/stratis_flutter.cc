@@ -61,6 +61,7 @@ void StratisFlutter::HandleMethodCall(
   if (method_call.method_name().compare("createPool") == 0) {
     
     auto pool = funcs::createPool(method_call.arguments);
+    
     flutter::EncodableValue response(pool);
     result->Success(&response);
   } else {
