@@ -57,11 +57,23 @@ StratisFlutter::~StratisFlutter(){};
 void StratisFlutter::HandleMethodCall(
     const flutter::MethodCall<flutter::EncodableValue> &method_call,
     std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result) {
-  if (method_call.method_name().compare("createPool") == 0) {
-    
-    auto pool = funcs::create_pool(method_call.arguments);
-    
-    flutter::EncodableValue response(true);
+  if (method_call.method_name().compare("getBlockdevs") == 0) {
+    char* commandname = "lsblk -n -o name -p -l";
+
+    FILE* blockdevs_file = popen(commandname, "r");
+
+    flutter::EncodableList blockdevs;
+    char blockdev[50];
+
+    while(fgets(blockdev, sizeof(blockdev), blockdevs_file) != NULL) {
+        blockdevs.push_back(
+            flutter::EncodableValue(
+                std::string(blockdev)
+            )
+        );
+    }
+        
+    flutter::EncodableValue response(blockdevs);
     result->Success(&response);
   } else {
     result->NotImplemented();
@@ -80,4 +92,3 @@ void StratisFlutterRegisterWithRegistrar(
 
 
 }
-
