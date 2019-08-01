@@ -13,8 +13,12 @@ class StratisFlutter {
 
   /// This method creates a pool with the given name
   /// and blockdevs
-  static Future<String> createPool({String name, dynamic redundancy, List<String> blockdevs}) async {
-    final pool = await _channel.invokeMethod('createPool');
+  static Future<String> createPool({String name, List<String> blockdevs}) async {
+    final args = {
+      'name': name,
+      'blockdevs': blockdevs
+    };
+    final pool = await _channel.invokeMethod('createPool', args);
     return pool;
   }
 }

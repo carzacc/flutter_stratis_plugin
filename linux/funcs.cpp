@@ -6,52 +6,8 @@
 
 
 namespace funcs {
-    std::string createPoolOld(std::unique_ptr<flutter::EncodableValue> args) {
-        flutter::EncodableValue arguments = *args.get();
-        DBusError dbus_error;
-        DBusConnection * dbus_conn;
-        DBusMessage * dbus_msg;
-        DBusMessage * dbus_reply;
-        const char * dbus_result;
-        std::string to_return;
-
-        
-
-        // Initialize D-Bus error
-        dbus_error_init(&dbus_error);
-        dbus_conn = dbus_bus_get(DBUS_BUS_SYSTEM, &dbus_error);
-
-        // Compose remote procedure call
-        dbus_msg =
-          dbus_message_new_method_call(
-            "org.storage.stratis1",
-            "/org/storage/stratis1",
-            "org.storage.stratis1.Manager",
-            "CreatePool"
-          );
-
-        // Invoke remote procedure call, block for response
-        dbus_reply = dbus_connection_send_with_reply_and_block(dbus_conn, dbus_msg, DBUS_TIMEOUT_USE_DEFAULT, &dbus_error);
-
-        // Parse response
-        dbus_message_get_args(dbus_reply, &dbus_error, DBUS_TYPE_STRING, &dbus_result, DBUS_TYPE_INVALID);
-
-        // Work with the results of the remote procedure call
-        to_return = dbus_result;
-        dbus_message_unref(dbus_msg);
-        dbus_message_unref(dbus_reply);
-
-        /*
-        * Applications must not close shared connections -
-        * see dbus_connection_close() docs. This is a bug in the application.
-        */
-        //::dbus_connection_close(dbus_conn);
-
-        // When using the System Bus, unreference
-        // the connection instead of closing it
-        dbus_connection_unref(dbus_conn);
-
-        return to_return;
+    overloads::Manager get_manager() {
+        return overloads::Manager(bus, "/org/storage/stratis1", "org.storage.stratis1");
     }
 
     DBus::BusDispatcher dispatcher;
@@ -65,23 +21,32 @@ namespace funcs {
         return object_manager.GetManagedObjects();
     }
 
-    void createPool(std::unique_ptr<flutter::EncodableValue> args) {
+    DBus::Struct< ::DBus::Path, std::vector<DBus::Path> > create_pool(std::unique_ptr<flutter::EncodableValue> args) {
         flutter::EncodableValue arguments = *args.get();
+        flutter::EncodableMap args_map = arguments.MapValue;
+        
+        std::string pool_name = args_map[flutter::EncodableValue(std::string("name"))].StringValue;
+        flutter::EncodableList blockdev_list_encoded = args_map[flutter::EncodableValue(std::string("blockdevs"))].ListValue;
+        std::vector<std::string> blockdevs;
+        for(int i = 0; i < blockdev_list_encoded.size; i++) {
+            blockdevs.push_back(
+                blockdev_list_encoded[i].StringValue
+            );
+        }
 
-        std::string pool_name;
         const DBus::Struct<bool, uint16_t> &redundancy = {
             true, 2
         };
 
         DBus::default_dispatcher = &dispatcher;
-        std::vector<std::string> blockdevs;
-        ::DBus::Struct< ::DBus::Path, std::vector< ::DBus::Path > > result;
-        uint16_t return_code = 1;
+        
+        DBus::Struct<DBus::Path, std::vector<DBus::Path> > result;
+        uint16_t return_code;
         std::string return_string;
 
-        overloads::Manager manager(bus, "/org/storage/stratis1", "org.storage.stratis1");
+        overloads::Manager manager = get_manager();
 
-        manager.CreatePool(pool_name, redundancy, blockdevs, result, return_code, return_string); // TODO: continue
+        manager.CreatePool(pool_name, redundancy, blockdevs, result, return_code, return_string); 
 
     }
 }
