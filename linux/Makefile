@@ -24,9 +24,9 @@ PLUGIN_NAME=stratis_flutter
 EXTRA_SOURCES=
 # Extra flags (e.g., for library dependencies).
 SYSTEM_LIBRARIES=dbus-1 dbus-c++-1
-EXTRA_CXXFLAGS=$(shell pkg-config --cflags $(SYSTEM_LIBRARIES))
+EXTRA_CXXFLAGS=$(shell pkg-config --cflags ${SYSTEM_LIBRARIES})
 EXTRA_CPPFLAGS=
-EXTRA_LDFLAGS=$(shell pkg-config --libs $(SYSTEM_LIBRARIES))
+EXTRA_LDFLAGS=$(shell pkg-config --libs ${SYSTEM_LIBRARIES})
 # ====================
 
 # Default build type. For a release build, set BUILD=release.

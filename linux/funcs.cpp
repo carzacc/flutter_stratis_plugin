@@ -55,10 +55,10 @@ namespace funcs {
     }
 
     DBus::BusDispatcher dispatcher;
+    DBus::Connection bus = DBus::Connection::SystemBus();
 
     std::map< ::DBus::Path, std::map< std::string, std::map< std::string, ::DBus::Variant > > > get_managed_objects() {
         DBus::default_dispatcher = &dispatcher;
-        DBus::Connection bus = DBus::Connection::SessionBus();
 
         overloads::ObjectManager object_manager(bus, "/org/storage/stratis1", "org.storage.stratis1.Manager");
 
@@ -74,14 +74,14 @@ namespace funcs {
         };
 
         DBus::default_dispatcher = &dispatcher;
-        DBus::Connection bus = DBus::Connection::SessionBus();
         std::vector<std::string> blockdevs;
+        ::DBus::Struct< ::DBus::Path, std::vector< ::DBus::Path > > result;
+        uint16_t return_code = 1;
+        std::string return_string;
 
-        overloads::Manager manager(bus, "/org/storage/stratis1", "org.storage.stratis1.Manager");
+        overloads::Manager manager(bus, "/org/storage/stratis1", "org.storage.stratis1");
 
-        manager.CreatePool(pool_name, redundancy, blockdevs, ...); // TODO: continue
+        manager.CreatePool(pool_name, redundancy, blockdevs, result, return_code, return_string); // TODO: continue
 
-        return object_manager.GetManagedObjects();
     }
-
 }

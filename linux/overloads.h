@@ -1,4 +1,4 @@
-#include "proxy.h";
+#include "proxy.h"
 
 namespace overloads {
 
