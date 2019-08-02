@@ -9,7 +9,7 @@ class StratisFlutter {
   /// The method channel we'll use to send our methods
   /// calls
   static const MethodChannel _channel =
-      const MethodChannel('stratis');
+      const MethodChannel('stratis_flutter');
 
   /// This method creates a pool with the given name
   /// and blockdevs

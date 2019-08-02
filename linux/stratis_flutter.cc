@@ -1,5 +1,5 @@
 #include "stratis_flutter.h"
-#include "funcs.cpp";
+#include "funcs.cpp"
 
 #include <flutter/method_channel.h>
 #include <flutter/plugin_registrar.h>
@@ -34,8 +34,10 @@ class StratisFlutter : public flutter::Plugin {
 void StratisFlutter::RegisterWithRegistrar(flutter::PluginRegistrar *registrar) {
   auto channel =
       std::make_unique<flutter::MethodChannel<flutter::EncodableValue>>(
-          registrar->messenger(), "stratis_flutter",
-          &flutter::StandardMethodCodec::GetInstance());
+        registrar->messenger(),
+        std::string("stratis_flutter"),
+        &flutter::StandardMethodCodec::GetInstance()
+      );
   auto *channel_pointer = channel.get();
 
   auto plugin = std::make_unique<StratisFlutter>(std::move(channel));
@@ -59,9 +61,9 @@ void StratisFlutter::HandleMethodCall(
     std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result) {
   if (method_call.method_name().compare("createPool") == 0) {
     
-    auto pool = funcs::create_pool(method_call.arguments);
+    std::string pool = funcs::create_pool(*method_call.arguments());
     
-    flutter::EncodableValue response(true);
+    flutter::EncodableValue response(pool);
     result->Success(&response);
   } else {
     result->NotImplemented();
