@@ -43,9 +43,10 @@ void StratisFlutter::RegisterWithRegistrar(flutter::PluginRegistrar *registrar) 
   auto plugin = std::make_unique<StratisFlutter>(std::move(channel));
 
   channel_pointer->SetMethodCallHandler(
-      [plugin_pointer = plugin.get()](const auto &call, auto result) {
-        plugin_pointer->HandleMethodCall(call, std::move(result));
-      });
+    [plugin_pointer = plugin.get()](const auto &call, auto result) {
+      plugin_pointer->HandleMethodCall(call, std::move(result));
+    }
+  );
 
   registrar->AddPlugin(std::move(plugin));
 }
@@ -57,13 +58,14 @@ StratisFlutter::StratisFlutter(
 StratisFlutter::~StratisFlutter(){};
 
 void StratisFlutter::HandleMethodCall(
-    const flutter::MethodCall<flutter::EncodableValue> &method_call,
-    std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result) {
-  if (method_call.method_name().compare("createPool") == 0) {
+  const flutter::MethodCall<flutter::EncodableValue> &method_call,
+  std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result) {
+  if (method_call.method_name().compare(std::string("createPool")) == 0) {
     
     std::string pool = funcs::create_pool(*method_call.arguments());
     
     flutter::EncodableValue response(pool);
+    
     result->Success(&response);
   } else {
     result->NotImplemented();
