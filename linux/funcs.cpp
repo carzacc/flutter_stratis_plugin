@@ -1,21 +1,25 @@
 #include "overloads.h"
-#include <dbus-1.0/dbus/dbus.h>
+#include <dbus/dbus.h>
 #include <flutter/standard_method_codec.h>
 
+#include <iostream>
 #include <string>
 
+struct StratisException : public std::exception
+{
+	const char * what () const throw ()
+    {
+    	return "Stratis exception";
+    }
+};
 
 namespace funcs {
-    DBus::BusDispatcher dispatcher;
-    DBus::Connection bus = DBus::Connection::SystemBus();
-
-    overloads::Manager get_manager() {
-        return overloads::Manager(bus, "/org/storage/stratis1", "org.storage.stratis1");
-    }
 
 
     std::map< ::DBus::Path, std::map< std::string, std::map< std::string, ::DBus::Variant > > > get_managed_objects() {
+        DBus::BusDispatcher dispatcher = DBus::BusDispatcher();
         DBus::default_dispatcher = &dispatcher;
+        DBus::Connection bus = DBus::Connection::SystemBus();
 
         overloads::ObjectManager object_manager(bus, "/org/storage/stratis1", "org.storage.stratis1.Manager");
 
@@ -37,15 +41,16 @@ namespace funcs {
         const DBus::Struct<bool, uint16_t> &redundancy = {
             true, 0
         };
-
+        
+        DBus::BusDispatcher dispatcher = DBus::BusDispatcher();
         DBus::default_dispatcher = &dispatcher;
+        DBus::Connection bus = DBus::Connection::SystemBus();
         
         DBus::Struct<DBus::Path, std::vector<DBus::Path> > result;
         uint16_t return_code;
         std::string return_string;
 
-        overloads::Manager manager = get_manager();
-
+        overloads::Manager manager = overloads::Manager(bus, "/org/storage/stratis1", "org.storage.stratis1");
         manager.CreatePool(pool_name, redundancy, blockdevs, result, return_code, return_string); 
 
         return return_string;
