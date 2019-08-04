@@ -188,14 +188,22 @@ std::string destroy_pool(std::string pool_name) {
     DBus::BusDispatcher dispatcher = DBus::BusDispatcher();
     DBus::default_dispatcher = &dispatcher;
     DBus::Connection bus = DBus::Connection::SystemBus();
+    overloads::Manager manager = overloads::Manager(bus, "/org/storage/stratis1", "org.storage.stratis1");
+    bool action;
+    uint16_t return_code;
+    std::string return_string("Default");
 
-    overloads::ObjectManager object_manager(bus, "/org/storage/stratis1", "org.storage.stratis1");
 
-    auto managed_objects = object_manager.GetManagedObjects();
+    auto pools = get_pools();
 
-
+    for(Pool_data pool_data : pools) {
+        if(pool_data.Name.compare(pool_name) == 0) {
+            manager.DestroyPool(pool_data.path, action, return_code, return_string);
+        }
+    }
+    return return_string !=  "Default" ? return_string : "Error";
 }
-
+// overloads::pool pool(bus, pool_data.path.data, "org.storage.stratis1");
 std::string create_pool(flutter::EncodableValue arguments) {
     flutter::EncodableMap args_map = arguments.MapValue();
     

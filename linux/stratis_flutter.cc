@@ -74,7 +74,16 @@ void StratisFlutter::HandleMethodCall(
     flutter::EncodableValue response(version);
     
     result->Success(&response);
-  } {
+  } else if (method_call.method_name().compare(std::string("destroyPool")) == 0) {
+    
+    auto pool_name = (*method_call.arguments()).StringValue();
+    
+    auto result_string = funcs::destroy_pool(pool_name);
+    
+    flutter::EncodableValue response(result_string);
+    
+    result->Success(&response);
+  }  else {
     result->NotImplemented();
   }
 }

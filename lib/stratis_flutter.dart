@@ -22,6 +22,13 @@ class StratisFlutter {
     return pool;
   }
 
+
+  /// Destroys pool the name of which equals `name`
+  static Future<String> destroyPool(String poolName) async {
+    final pool = await _channel.invokeMethod('destroyPool', poolName);
+    return pool;
+  }
+
   /// This method returns the version of the stratis
   /// daemon
   static Future<String> getVersion() async {
