@@ -21,4 +21,12 @@ class StratisFlutter {
     final pool = await _channel.invokeMethod('createPool', args);
     return pool;
   }
+
+  /// This method returns the version of the stratis
+  /// daemon
+  static Future<String> getVersion() async {
+    final version = await _channel.invokeMethod('getVersion');
+
+    return version;
+  }
 }

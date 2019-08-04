@@ -67,7 +67,14 @@ void StratisFlutter::HandleMethodCall(
     flutter::EncodableValue response(pool);
     
     result->Success(&response);
-  } else {
+  } else if (method_call.method_name().compare(std::string("getVersion")) == 0) {
+    
+    std::string version = funcs::get_version();
+    
+    flutter::EncodableValue response(version);
+    
+    result->Success(&response);
+  } {
     result->NotImplemented();
   }
 }
