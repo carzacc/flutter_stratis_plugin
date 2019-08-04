@@ -28,6 +28,21 @@ struct Filesystem_data {
 
 
 struct Blockdev_data {
+    /*
+    Example:
+    {
+        path:/org/storage/stratis1/3
+        Devnode:/dev/example1
+        HardwareInfo:
+        InitializationTime:1564920213
+        Pool:/org/storage/stratis1/1
+        State:4
+        Tier:0
+        TotalPhysicalSize:2097152
+        UserInfo:
+        Uuid:f7b52baf60a54b18b65c7497b4e869cc
+    }
+     */
     DBus::Path path;
     std::string Devnode;
     std::string HardwareInfo;
@@ -121,6 +136,31 @@ std::vector<Pool_data> get_pools() {
     return list;
 }
 
+std::vector<Blockdev_data> get_blockdevs() {
+    auto managed_objects = get_managed_objects();
+
+    std::vector<Blockdev_data> list;
+
+    for(auto el : managed_objects) {
+        for(auto ell: el.second) {
+            if(ell.first.compare("org.storage.stratis1.blockdev") == 0) {
+                Blockdev_data blockdev;
+                blockdev.path  = el.first;
+                blockdev.Devnode = ell.second["Devnode"].reader().get_string();
+                blockdev.HardwareInfo = ell.second["HardwareInfo"].reader().get_string();
+                blockdev.InitializationTime = ell.second["InitializationTime"].reader().get_uint64();
+                blockdev.Pool = ell.second["Pool"].reader().get_path();
+                blockdev.State = ell.second["State"].reader().get_uint16();
+                blockdev.Tier = ell.second["Tier"].reader().get_uint16();
+                blockdev.TotalPhysicalSize = ell.second["TotalPhysicalSize"].reader().get_string();
+                blockdev.UserInfo = ell.second["UserInfo"].reader().get_string();
+                blockdev.Uuid = ell.second["Uuid"].reader().get_string();
+                list.push_back(blockdev);
+            }
+        }
+    }
+    return list;
+}
 
 std::string create_pool() {
         DBus::BusDispatcher dispatcher = DBus::BusDispatcher();
@@ -205,6 +245,23 @@ int main(void) {
         std::cout << "\tTotalPhysicalSize:" << pool.TotalPhysicalSize << std::endl;
         std::cout << "\tTotalPhysicalUsed:" << pool.TotalPhysicalUsed << std::endl;
         std::cout << "\tUuid:" << pool.Uuid << std::endl;
+        std::cout << "}\n"; 
+    }
+
+    cout << "Block Devices:" << std::endl;
+
+    for(Blockdev_data blockdev : get_blockdevs()) {
+        std::cout << "{\n";
+        std::cout << "\tpath:" << blockdev.path << std::endl;
+        std::cout << "\tDevnode:" << blockdev.Devnode << std::endl;
+        std::cout << "\tHardwareInfo:" << blockdev.HardwareInfo << std::endl;
+        std::cout << "\tInitializationTime:" << blockdev.InitializationTime << std::endl;
+        std::cout << "\tPool:" << blockdev.Pool << std::endl;
+        std::cout << "\tState:" << blockdev.State << std::endl;
+        std::cout << "\tTier:" << blockdev.Tier << std::endl;
+        std::cout << "\tTotalPhysicalSize:" << blockdev.TotalPhysicalSize << std::endl;
+        std::cout << "\tUserInfo:" << blockdev.UserInfo << std::endl;
+        std::cout << "\tUuid:" << blockdev.Uuid << std::endl;
         std::cout << "}\n"; 
     }
 }

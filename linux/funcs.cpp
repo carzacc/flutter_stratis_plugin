@@ -29,6 +29,21 @@ struct Filesystem_data {
 
 
 struct Blockdev_data {
+    /*
+    Example:
+    {
+        path:/org/storage/stratis1/3
+        Devnode:/dev/example1
+        HardwareInfo:
+        InitializationTime:1564920213
+        Pool:/org/storage/stratis1/1
+        State:4
+        Tier:0
+        TotalPhysicalSize:2097152
+        UserInfo:
+        Uuid:f7b52baf60a54b18b65c7497b4e869cc
+    }
+     */
     DBus::Path path;
     std::string Devnode;
     std::string HardwareInfo;
@@ -112,6 +127,32 @@ std::vector<Filesystem_data> get_filesystems() {
                 fs.Used = ell.second["Used"].reader().get_string();
                 fs.Uuid = ell.second["Uuid"].reader().get_string();
                 list.push_back(fs);
+            }
+        }
+    }
+    return list;
+}
+
+std::vector<Blockdev_data> get_blockdevs() {
+    auto managed_objects = get_managed_objects();
+
+    std::vector<Blockdev_data> list;
+
+    for(auto el : managed_objects) {
+        for(auto ell: el.second) {
+            if(ell.first.compare("org.storage.stratis1.blockdev") == 0) {
+                Blockdev_data blockdev;
+                blockdev.path  = el.first;
+                blockdev.Devnode = ell.second["Devnode"].reader().get_string();
+                blockdev.HardwareInfo = ell.second["HardwareInfo"].reader().get_string();
+                blockdev.InitializationTime = ell.second["InitializationTime"].reader().get_uint64();
+                blockdev.Pool = ell.second["Pool"].reader().get_path();
+                blockdev.State = ell.second["State"].reader().get_uint16();
+                blockdev.Tier = ell.second["Tier"].reader().get_uint16();
+                blockdev.TotalPhysicalSize = ell.second["TotalPhysicalSize"].reader().get_string();
+                blockdev.UserInfo = ell.second["UserInfo"].reader().get_string();
+                blockdev.Uuid = ell.second["Uuid"].reader().get_string();
+                list.push_back(blockdev);
             }
         }
     }
