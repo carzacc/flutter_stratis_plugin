@@ -23,9 +23,29 @@ class StratisFlutter {
   }
 
 
-  /// Destroys pool the name of which equals `name`
+  /// Destroys the pool called `poolName`
   static Future<String> destroyPool(String poolName) async {
     final pool = await _channel.invokeMethod('destroyPool', poolName);
+    return pool;
+  }
+
+  /// Adds cache block devices to the pool called `poolName`
+  static Future<String> addCacheBlockdevs(String poolName, List<String> blockdevs) async {
+    final args = {
+      "pool_name": poolName,
+      "blockdevs": blockdevs
+    }
+    final pool = await _channel.invokeMethod('addCacheDevs', poolName);
+    return pool;
+  }
+
+  /// Adds data block devices to the pool called `poolName`
+  static Future<String> addDataBlockdevs(String poolName, List<String> blockdevs) async {
+    final args = {
+      "pool_name": poolName,
+      "blockdevs": blockdevs
+    }
+    final pool = await _channel.invokeMethod('addDataDevs', poolName);
     return pool;
   }
 
