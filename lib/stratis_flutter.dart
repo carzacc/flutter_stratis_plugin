@@ -34,7 +34,7 @@ class StratisFlutter {
     final args = {
       "pool_name": poolName,
       "blockdevs": blockdevs
-    }
+    };
     final pool = await _channel.invokeMethod('addCacheDevs', poolName);
     return pool;
   }
@@ -44,7 +44,7 @@ class StratisFlutter {
     final args = {
       "pool_name": poolName,
       "blockdevs": blockdevs
-    }
+    };
     final pool = await _channel.invokeMethod('addDataDevs', poolName);
     return pool;
   }
