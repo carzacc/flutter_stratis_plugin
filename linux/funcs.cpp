@@ -275,4 +275,45 @@ int add_data_blockdevs(flutter::EncodableValue arguments) {
 
 }
 
+int add_cache_blockdevs(flutter::EncodableValue arguments) {
+    flutter::EncodableMap args_map = arguments.MapValue();
+
+
+    std::string pool_name = args_map[flutter::EncodableValue(std::string("pool_name"))].StringValue();
+    flutter::EncodableList blockdev_list_encoded = args_map[flutter::EncodableValue(std::string("blockdevs"))].ListValue();
+
+    std::vector<std::string> blockdevs;
+    
+    for(size_t i = 0; i < blockdev_list_encoded.size(); i++) {
+        blockdevs.push_back(
+            blockdev_list_encoded[i].StringValue()
+        );
+    }
+
+    DBus::BusDispatcher dispatcher = DBus::BusDispatcher();
+    DBus::default_dispatcher = &dispatcher;
+    DBus::Connection bus = DBus::Connection::SystemBus();
+
+    uint16_t return_code;
+    std::vector<DBus::Path> returned_paths;
+    std::string return_string;
+
+    std::vector<Pool_data> pools = get_pools();
+    std::string pool_path;
+
+    for(Pool_data cur_pool : pools) {
+        if(cur_pool.Name.compare(pool_name) == 0) {
+            pool_path = cur_pool.path;
+        } 
+    }
+
+
+    overloads::pool pool = overloads::pool(bus, pool_path.data(), "org.storage.stratis1");
+    pool.AddCacheDevs(blockdevs, returned_paths, return_code, return_string);
+
+    return return_code;
+
+}
+
+
 }
