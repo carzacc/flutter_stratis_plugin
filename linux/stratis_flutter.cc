@@ -83,6 +83,27 @@ void StratisFlutter::HandleMethodCall(
     flutter::EncodableValue response(result_string);
     
     result->Success(&response);
+  } else if (method_call.method_name().compare(std::string("addDataDevs")) == 0) {
+    
+    auto return_code = funcs::add_data_blockdevs(*method_call.arguments());
+    
+    flutter::EncodableValue response(return_code);
+    
+    result->Success(&response);
+  } else if (method_call.method_name().compare(std::string("addCacheDevs")) == 0) {
+    
+    auto return_code = funcs::add_cache_blockdevs(*method_call.arguments());
+    
+    flutter::EncodableValue response(return_code);
+    
+    result->Success(&response);
+  } else if (method_call.method_name().compare(std::string("createPool")) == 0) {
+    
+    auto return_string = funcs::create_pool(*method_call.arguments());
+    
+    flutter::EncodableValue response(return_string);
+    
+    result->Success(&response);
   }  else {
     result->NotImplemented();
   }
