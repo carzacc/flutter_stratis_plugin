@@ -331,5 +331,55 @@ int add_cache_blockdevs(flutter::EncodableValue arguments) {
 
 }
 
+int destroy_filesystem(flutter::EncodableValue arguments) {
+    flutter::EncodableMap args_map = arguments.MapValue();
+
+
+    std::string pool_name = args_map[flutter::EncodableValue(std::string("pool_name"))].StringValue();
+    flutter::EncodableList fs_names_encoded = args_map[flutter::EncodableValue(std::string("fs_name"))].ListValue();
+
+    std::vector<std::string> fs_names;
+    
+    for(size_t i = 0; i < fs_names_encoded.size(); i++) {
+        fs_names.push_back(
+            fs_names_encoded[i].StringValue()
+        );
+    }
+
+    DBus::BusDispatcher dispatcher = DBus::BusDispatcher();
+    DBus::default_dispatcher = &dispatcher;
+    DBus::Connection bus = DBus::Connection::SystemBus();
+
+    uint16_t return_code;
+    std::vector<std::string> results;
+    std::string return_string;
+
+    std::vector<Pool_data> pools = get_pools();
+    DBus::Path pool_path;
+
+    for(Pool_data cur_pool : pools) {
+        if(cur_pool.Name.compare(pool_name) == 0) {
+            pool_path = cur_pool.path;
+        } 
+    }
+
+    overloads::pool pool = overloads::pool(bus, pool_path.data(), "org.storage.stratis1");
+
+    std::vector<Filesystem_data> filesystems = get_filesystems();
+    std::vector<DBus::Path> fs_paths;
+
+    for(Filesystem_data cur_fs : filesystems) {
+        for(std::string fs_name : fs_names) {
+            if(fs_name.compare(cur_fs.Name) == 0 && cur_fs.Pool.compare(pool.path()))
+              fs_paths.push_back(cur_fs.path);
+        } 
+    }
+
+    
+    pool.DestroyFilesystems(fs_paths, results, return_code, return_string);
+
+    return return_code;
+
+}
 
 }
