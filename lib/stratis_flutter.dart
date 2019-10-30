@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 
-struct Filesystem_data {
+class Filesystem_data {
     /*
     Example:
     {
@@ -15,17 +15,17 @@ struct Filesystem_data {
         Uuid:f451fd274e0e4e5fb65591bd0db0b30d
     }
      */
-    DBus::Path path;
-    std::string Created;
-    std::string Devnode;
-    std::string Name;
-    DBus::Path Pool;
-    std::string Used;
-    std::string Uuid;
-};
+    String path;
+    String Created;
+    String Devnode;
+    String Name;
+    String Pool;
+    String Used;
+    String Uuid;
+}
 
 
-struct Blockdev_data {
+class Blockdev_data {
     /*
     Example:
     {
@@ -41,17 +41,17 @@ struct Blockdev_data {
         Uuid:f7b52baf60a54b18b65c7497b4e869cc
     }
      */
-    DBus::Path path;
-    std::string Devnode;
-    std::string HardwareInfo;
-    uint64_t InitializationTime;
-    DBus::Path Pool;
-    uint16_t State;
-    uint16_t Tier;
-    std::string TotalPhysicalSize;
-    std::string UserInfo;
-    std::string Uuid;
-};
+    String path;
+    String Devnode;
+    String HardwareInfo;
+    int InitializationTime;
+    String Pool;
+    int State;
+    int Tier;
+    String TotalPhysicalSize;
+    String UserInfo;
+    String Uuid;
+}
 
 class Pool_data {
     /*
@@ -75,7 +75,7 @@ class Pool_data {
     String TotalPhysicalSize;
     String TotalPhysicalUsed;
     String Uuid;
-};
+}
 
 
 /// The interface between our Flutter code and
