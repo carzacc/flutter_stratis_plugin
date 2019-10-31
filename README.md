@@ -4,9 +4,9 @@ This plugins will allow a Flutter Desktop Linux app (ran with root privileges wi
 
 ## Dependencies
 
-DBus (with the headers for development purposes), Stratis, Flutter SDK with support for desktop development. More details will be provided later.
+make, GCC with C++14 support, DBus (with the headers for development purposes), Stratis, Flutter SDK with support for desktop development. More details will be provided later.
 
-## Building the 
+## Building the Plugin
 
 This plugin is supposed to be built using the `Makefile` by runnning
 
