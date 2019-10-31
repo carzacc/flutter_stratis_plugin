@@ -25,3 +25,12 @@ Contributions are welcome both for the app and the plugin. Both are at an incred
 Obviously, design/implementation ideas and documentation improvements are appreciated, especially the former, given that there are multiple ways of getting the features implemented and, at the moment, the existing ones are hacked together in the shortest time possible for lack of time to dedicate to this project.
 
 Also, the code in the repo right now (especially the Dart part) might not even be all correct, let alone good quality.
+
+
+## Structure of the Code
+
+The code is made up of three main components:
+
+* the C++ code that interacts with the Stratis daemon over D-Bus, made up of the automatically generated `overloads.h` and `proxy.h` files, which should be generated automatically again only in case of changes to the Stratis D-Bus interface, and the `funcs.cc` file that contains the C++ functions that easily translate user Stratis commands into Stratis D-Bus method calls and which should implement the same features currently supported by the Stratis CLI tool, anything else that might be nice to have when buidling the GUI tool is something we should worry about when at least the basic features are covered;
+* the C++ code that acts as a bridge between the low-level C++ interface and the Dart interface, made up of `stratis_flutter.cc` and `helpers.cc`, which call functions in `funcs.cc` and listen for Dart platform channel method calls;
+* a Dart interface that calls method on the platform channel.

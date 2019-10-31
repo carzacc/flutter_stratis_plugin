@@ -14,7 +14,7 @@
   limitations under the License.
 */
 #include "stratis_flutter.h"
-#include "funcs.cpp"
+#include "funcs.h"
 
 #include <flutter/method_channel.h>
 #include <flutter/plugin_registrar.h>
