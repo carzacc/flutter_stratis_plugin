@@ -2,6 +2,12 @@
 
 This plugins will allow a Flutter Desktop Linux app (ran with root privileges with `sudo` on X.Org) to interact with the Stratis daemon.
 
+## Dependencies
+
+DBus (with the headers for development purposes), Stratis, Flutter SDK with support for desktop development. More details will be provided later.
+
+## Building the 
+
 This plugin is supposed to be built using the `Makefile` by runnning
 
 ~~~

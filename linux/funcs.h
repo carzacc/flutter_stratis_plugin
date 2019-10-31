@@ -18,6 +18,7 @@
 
 #include <dbus/dbus.h>
 #include <flutter/standard_method_codec.h>
+#include "overloads.h"
 
 #include <iostream>
 #include <string>
@@ -120,4 +121,4 @@ int add_cache_blockdevs(flutter::EncodableValue arguments);
 int destroy_filesystem(flutter::EncodableValue arguments);
 }
 
-#endif
+#endif /* FUNCS_H */

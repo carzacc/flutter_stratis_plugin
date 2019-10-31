@@ -1,3 +1,5 @@
+#ifndef OVERLOADS_H
+#define OVERLOADS_H
 #include "proxy.h"
 
 namespace overloads {
@@ -60,3 +62,4 @@ public:
 
 
 }
+#endif /* OVERLOADS_H */
