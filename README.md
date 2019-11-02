@@ -8,6 +8,8 @@ make, GCC with C++14 support, DBus (with the headers for development purposes), 
 
 ## Building the Plugin
 
+At the moment Flutter Linux plugin tooling for desktop plugins hasn't yet been implemented but is being implemented, so it's rather painful to use the plugin as things are now but it is being worked on by the Flutter team. Hopefully progress on that front will help us more than the changes to the API on the Stratis side will slow us down.
+
 This plugin is supposed to be built using the `Makefile` by runnning
 
 ~~~

@@ -250,12 +250,12 @@ int add_cache_blockdevs(flutter::EncodableValue arguments) {
 
 }
 
-int destroy_filesystem(flutter::EncodableValue arguments) {
+int destroy_filesystems(flutter::EncodableValue arguments) {
     flutter::EncodableMap args_map = arguments.MapValue();
 
 
     std::string pool_name = args_map[flutter::EncodableValue(std::string("pool_name"))].StringValue();
-    flutter::EncodableList fs_names_encoded = args_map[flutter::EncodableValue(std::string("fs_name"))].ListValue();
+    flutter::EncodableList fs_names_encoded = args_map[flutter::EncodableValue(std::string("fs_names"))].ListValue();
 
     std::vector<std::string> fs_names;
     
@@ -296,6 +296,45 @@ int destroy_filesystem(flutter::EncodableValue arguments) {
 
     
     pool.DestroyFilesystems(fs_paths, results, return_code, return_string);
+
+    return return_code;
+
+}
+
+int create_filesystems(flutter::EncodableValue arguments) {
+    flutter::EncodableMap args_map = arguments.MapValue();
+
+
+    std::string pool_name = args_map[flutter::EncodableValue(std::string("pool_name"))].StringValue();
+    flutter::EncodableList fs_names_encoded = args_map[flutter::EncodableValue(std::string("fs_name"))].ListValue();
+
+    std::vector<std::string> specs; // filesystem specs, currently just the names 
+    
+    for(size_t i = 0; i < fs_names_encoded.size(); i++) {
+        specs.push_back(
+            fs_names_encoded[i].StringValue()
+        );
+    }
+
+    DBus::BusDispatcher dispatcher = DBus::BusDispatcher();
+    DBus::default_dispatcher = &dispatcher;
+    DBus::Connection bus = DBus::Connection::SystemBus();
+
+    uint16_t return_code;
+    std::vector< ::DBus::Struct< ::DBus::Path, std::string > > results;
+    std::string return_string;
+
+    std::vector<Pool_data> pools = get_pools();
+    DBus::Path pool_path;
+
+    for(Pool_data cur_pool : pools) {
+        if(cur_pool.Name.compare(pool_name) == 0) {
+            pool_path = cur_pool.path;
+        } 
+    }
+
+    overloads::pool pool = overloads::pool(bus, pool_path.data(), "org.storage.stratis1");    
+    pool.CreateFilesystems(specs, results, return_code, return_string);
 
     return return_code;
 

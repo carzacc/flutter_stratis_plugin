@@ -118,7 +118,8 @@ std::string destroy_pool(std::string pool_name);
 std::string create_pool(flutter::EncodableValue arguments);
 int add_data_blockdevs(flutter::EncodableValue arguments);
 int add_cache_blockdevs(flutter::EncodableValue arguments);
-int destroy_filesystem(flutter::EncodableValue arguments);
+int destroy_filesystems(flutter::EncodableValue arguments);
+int create_filesystems(flutter::EncodableValue arguments);
 }
 
 #endif /* FUNCS_H */

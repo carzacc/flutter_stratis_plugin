@@ -112,9 +112,16 @@ void StratisFlutter::HandleMethodCall(
     flutter::EncodableValue response(return_code);
     
     result->Success(&response);
-  } else if (method_call.method_name().compare(std::string("createPool")) == 0) {
+  } else if (method_call.method_name().compare(std::string("destroyFilesystems")) == 0) {
     
-    auto return_string = funcs::create_pool(*method_call.arguments());
+    auto return_string = funcs::destroy_filesystems(*method_call.arguments());
+    
+    flutter::EncodableValue response(return_string);
+    
+    result->Success(&response);
+  } else if (method_call.method_name().compare(std::string("createFilesystems")) == 0) {
+    
+    auto return_string = funcs::create_filesystems(*method_call.arguments());
     
     flutter::EncodableValue response(return_string);
     
