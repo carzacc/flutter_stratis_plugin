@@ -106,7 +106,7 @@ class StratisFlutter {
   }
 
   /// Adds cache block devices to the pool called `poolName`
-  static Future<String> addCacheBlockdevs(String poolName, List<String> blockdevs) async {
+  static Future<int> addCacheBlockdevs(String poolName, List<String> blockdevs) async {
     final args = {
       'pool_name': poolName,
       'blockdevs': blockdevs
@@ -116,7 +116,7 @@ class StratisFlutter {
   }
 
   /// Adds data block devices to the pool called `poolName`
-  static Future<String> addDataBlockdevs(String poolName, List<String> blockdevs) async {
+  static Future<int> addDataBlockdevs(String poolName, List<String> blockdevs) async {
     final args = {
       'pool_name': poolName,
       'blockdevs': blockdevs
@@ -124,6 +124,52 @@ class StratisFlutter {
     final pool = await _channel.invokeMethod('addDataDevs', args);
     return pool;
   }
+
+  /// Destroys the filesystems with the names listed in `fsNames` from the pool `poolName`
+  static Future<int> destroyFilesystems(String poolName, List<String> fsNames) async {
+    final args = {
+      'pool_name': poolName,
+      'fs_names': fsNames
+    };
+    final pool = await _channel.invokeMethod('destroyFilesystems', args);
+    return pool;
+  }
+
+  /// Create filesystems in the pool `poolName` with the given `fsNames`
+  static Future<int> createFilesystems(String poolName, List<String> fsNames) async {
+    final args = {
+      'pool_name': poolName,
+      'fs_names': fsNames
+    };
+    final res = await _channel.invokeMethod('createFilesystems', args);
+    return res;
+  }
+
+  /// This method returns the version of the stratis
+  /// daemon
+  static Future<String> listPools() async {
+    final version = await _channel.invokeMethod('getVersion');
+
+    return version;
+  }
+
+  /// This method returns the version of the stratis
+  /// daemon
+  static Future<String> listFilesystems() async {
+    final version = await _channel.invokeMethod('getVersion');
+
+    return version;
+  }
+
+  /// This method returns the version of the stratis
+  /// daemon
+  static Future<String> listBlockdevs() async {
+    final version = await _channel.invokeMethod('getVersion');
+
+    return version;
+  }
+
+  
 
   /// This method returns the version of the stratis
   /// daemon
