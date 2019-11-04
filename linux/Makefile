@@ -80,6 +80,7 @@ WRAPPER_SOURCES= \
 	$(WRAPPER_ROOT)/plugin_registrar.cc \
 	$(WRAPPER_ROOT)/standard_codec.cc
 
+EXTRA_SOURCES=funcs.cc
 # Use abspath for extra sources, which may also contain relative paths (see
 # note above about WRAPPER_ROOT).
 SOURCES=$(PLUGIN_NAME).cc $(WRAPPER_SOURCES) $(abspath $(EXTRA_SOURCES))
