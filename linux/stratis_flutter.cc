@@ -126,6 +126,120 @@ void StratisFlutter::HandleMethodCall(
     flutter::EncodableValue response(return_code);
     
     result->Success(&response);
+  } else if (method_call.method_name().compare(std::string("listBlockdevs")) == 0) {
+    
+    auto blockdevs = funcs::get_blockdevs();
+
+    flutter::EncodableList blockdev_list;
+
+    for(size_t i = 0;  i < blockdevs.size(); i++) {
+      blockdev_list.push_back(
+        flutter::EncodableValue(blockdevs[i].path)
+      );
+      blockdev_list.push_back(
+       flutter::EncodableValue(blockdevs[i].Devnode)
+      );
+      blockdev_list.push_back(
+        flutter::EncodableValue(blockdevs[i].HardwareInfo)
+      );
+      blockdev_list.push_back(
+        flutter::EncodableValue((uint16_t) blockdevs[i].InitializationTime) // type cast necessary because of spurious "Too many candidates" compiler error
+      );
+      blockdev_list.push_back(
+        flutter::EncodableValue(blockdevs[i].Pool)
+      );
+      blockdev_list.push_back(
+        flutter::EncodableValue(blockdevs[i].State)
+      );
+      blockdev_list.push_back(
+        flutter::EncodableValue(blockdevs[i].Tier)
+      );
+      blockdev_list.push_back(
+        flutter::EncodableValue(blockdevs[i].TotalPhysicalSize)
+      );
+      blockdev_list.push_back(
+        flutter::EncodableValue(blockdevs[i].UserInfo)
+      );
+      blockdev_list.push_back(
+        flutter::EncodableValue(blockdevs[i].Uuid)
+      );
+    }
+    
+
+    flutter::EncodableValue response(blockdev_list);
+    
+    result->Success(&response);
+  } else if (method_call.method_name().compare(std::string("listFilesystems")) == 0) {
+    
+    auto filesystems = funcs::get_filesystems();
+
+    flutter::EncodableList filesystem_list;
+
+    for(size_t i = 0;  i < filesystems.size(); i++) {
+      filesystem_list.push_back(
+        flutter::EncodableValue(filesystems[i].path)
+      );
+      filesystem_list.push_back(
+       flutter::EncodableValue(filesystems[i].Created)
+      );
+      filesystem_list.push_back(
+        flutter::EncodableValue(filesystems[i].Devnode)
+      );
+      filesystem_list.push_back(
+        flutter::EncodableValue(filesystems[i].Name)
+      );
+      filesystem_list.push_back(
+        flutter::EncodableValue(filesystems[i].Pool)
+      );
+      filesystem_list.push_back(
+        flutter::EncodableValue(filesystems[i].Used)
+      );
+      filesystem_list.push_back(
+        flutter::EncodableValue(filesystems[i].Uuid)
+      );
+    }
+    
+
+    flutter::EncodableValue response(filesystem_list);
+    
+    result->Success(&response);
+  } else if (method_call.method_name().compare(std::string("listPools")) == 0) {
+    
+    auto pools = funcs::get_pools();
+
+    flutter::EncodableList pool_list;
+
+    for(size_t i = 0;  i < pools.size(); i++) {
+      pool_list.push_back(
+        flutter::EncodableValue(pools[i].path)
+      );
+      pool_list.push_back(
+       flutter::EncodableValue(pools[i].ExtendState)
+      );
+      pool_list.push_back(
+        flutter::EncodableValue(pools[i].Name)
+      );
+      pool_list.push_back(
+        flutter::EncodableValue(pools[i].SpaceState)
+      );
+      pool_list.push_back(
+        flutter::EncodableValue(pools[i].State)
+      );
+      pool_list.push_back(
+        flutter::EncodableValue(pools[i].TotalPhysicalSize)
+      );
+      pool_list.push_back(
+        flutter::EncodableValue(pools[i].TotalPhysicalUsed)
+      );
+      pool_list.push_back(
+        flutter::EncodableValue(pools[i].Uuid)
+      );
+    }
+    
+
+    flutter::EncodableValue response(pool_list);
+    
+    result->Success(&response);
   }  else {
     result->NotImplemented();
   }

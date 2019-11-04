@@ -11,8 +11,7 @@ class StratisFlutter {
   static const MethodChannel _channel =
       const MethodChannel('stratis');
 
-  /// This method creates a pool with the given name
-  /// and blockdevs
+  /// Lists the block devices available in the system (including those not managed by Stratis)
   static Future<List<String>> getBlockdevs() async =>
     await _channel.invokeMethod('getBlockdevs');
 }

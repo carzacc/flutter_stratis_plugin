@@ -3,6 +3,10 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 
 class Filesystem_data {
+  /// Creates a Filesystem_data object with the given attributes.
+  /// The constructor takes the parameters in the same order as they are given
+  /// by the C++ backend when sending the attributes through the platform channel.
+    Filesystem_data(this.path, this.Created, this.Devnode, this.Name, this.Pool, this.Used, this.Uuid);
     /*
     Example:
     {
@@ -26,6 +30,10 @@ class Filesystem_data {
 
 
 class Blockdev_data {
+  /// Creates a Blockdev_data object with the given attributes.
+  /// The constructor takes the parameters in the same order as they are given
+  /// by the C++ backend when sending the attributes through the platform channel.
+    Blockdev_data(this.path, this.Devnode, this.HardwareInfo, this.InitializationTime, this.Pool, this.State, this.Tier, this.TotalPhysicalSize, this.UserInfo, this.Uuid);
     /*
     Example:
     {
@@ -54,6 +62,10 @@ class Blockdev_data {
 }
 
 class Pool_data {
+  /// Creates a Pool_data object with the given attributes.
+  /// The constructor takes the parameters in the same order as they are given
+  /// by the C++ backend when sending the attributes through the platform channel.
+  Pool_data(this.path, this.ExtendState, this.Name, this.SpaceState, this.State, this.TotalPhysicalSize, this.TotalPhysicalUsed, this.Uuid);
     /*
     Example:
     {
@@ -145,28 +157,75 @@ class StratisFlutter {
     return res;
   }
 
-  /// This method returns the version of the stratis
-  /// daemon
-  static Future<String> listPools() async {
-    final version = await _channel.invokeMethod('getVersion');
+  /// This a list of pools managed by Stratis
+  static Future<List<Pool_data>> listPools() async {
+    final List<dynamic> pool_list = await _channel.invokeMethod('listPools');
+    List<Pool_data> pools;
 
-    return version;
+    for(var i = 0; i < pool_list.length; i+=10) {
+      pools.add(
+        Pool_data(
+          pool_list[i],
+          pool_list[i+1],
+          pool_list[i+2],
+          pool_list[i+3],
+          pool_list[i+4],
+          pool_list[i+5],
+          pool_list[i+6],
+          pool_list[i+7],
+        )
+      );
+    }
+
+    return pools;
   }
 
-  /// This method returns the version of the stratis
-  /// daemon
-  static Future<String> listFilesystems() async {
-    final version = await _channel.invokeMethod('getVersion');
+  /// This method returns a list of filesystems managed by Stratis
+  static Future<List<Filesystem_data>> listFilesystems() async {
+    final List<dynamic> filesystem_list = await _channel.invokeMethod('listFilesystems');
+    List<Filesystem_data> filesystems;
 
-    return version;
+    for(var i = 0; i < filesystem_list.length; i+=10) {
+      filesystems.add(
+        Filesystem_data(
+          filesystem_list[i],
+          filesystem_list[i+1],
+          filesystem_list[i+2],
+          filesystem_list[i+3],
+          filesystem_list[i+4],
+          filesystem_list[i+5],
+          filesystem_list[i+6],
+        )
+      );
+    }
+
+    return filesystems;
   }
 
-  /// This method returns the version of the stratis
-  /// daemon
-  static Future<String> listBlockdevs() async {
-    final version = await _channel.invokeMethod('getVersion');
+  /// This method returns the version of block devices managed by Stratis
+  static Future<List<Blockdev_data>> listBlockdevs() async {
+    final List<dynamic> blockdev_list = await _channel.invokeMethod('listBlockdevs');
 
-    return version;
+    List<Blockdev_data> blockdevs;
+
+    for(var i = 0; i < blockdev_list.length; i+=10) {
+      blockdevs.add(
+        Blockdev_data(
+          blockdev_list[i],
+          blockdev_list[i+1],
+          blockdev_list[i+2],
+          blockdev_list[i+3],
+          blockdev_list[i+4],
+          blockdev_list[i+5],
+          blockdev_list[i+6],
+          blockdev_list[i+7],
+          blockdev_list[i+8],
+          blockdev_list[i+9],          
+        )
+      );
+    }
+
+    return blockdevs;
   }
 
   
