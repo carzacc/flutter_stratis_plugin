@@ -1,0 +1,50 @@
+/disconuovo/flutter-desktop-embedding/plugins/stratis_flutter/linux/../build/linux/stratis_flutter/obj/stratis_flutter.o: \
+ stratis_flutter.cc stratis_flutter.h \
+ /disconuovo/flutter-desktop-embedding/plugins/stratis_flutter/linux/../build/linux/stratis_flutter/flutter/flutter_plugin_registrar.h \
+ /disconuovo/flutter-desktop-embedding/plugins/stratis_flutter/linux/../build/linux/stratis_flutter/flutter/flutter_export.h \
+ /disconuovo/flutter-desktop-embedding/plugins/stratis_flutter/linux/../build/linux/stratis_flutter/flutter/flutter_messenger.h \
+ funcs.h /usr/include/dbus-1.0/dbus/dbus.h \
+ /usr/lib64/dbus-1.0/include/dbus/dbus-arch-deps.h \
+ /usr/include/dbus-1.0/dbus/dbus-macros.h \
+ /usr/include/dbus-1.0/dbus/dbus-address.h \
+ /usr/include/dbus-1.0/dbus/dbus-types.h \
+ /usr/include/dbus-1.0/dbus/dbus-errors.h \
+ /usr/include/dbus-1.0/dbus/dbus-protocol.h \
+ /usr/include/dbus-1.0/dbus/dbus-bus.h \
+ /usr/include/dbus-1.0/dbus/dbus-connection.h \
+ /usr/include/dbus-1.0/dbus/dbus-memory.h \
+ /usr/include/dbus-1.0/dbus/dbus-message.h \
+ /usr/include/dbus-1.0/dbus/dbus-shared.h \
+ /usr/include/dbus-1.0/dbus/dbus-misc.h \
+ /usr/include/dbus-1.0/dbus/dbus-pending-call.h \
+ /usr/include/dbus-1.0/dbus/dbus-server.h \
+ /usr/include/dbus-1.0/dbus/dbus-signature.h \
+ /usr/include/dbus-1.0/dbus/dbus-syntax.h \
+ /usr/include/dbus-1.0/dbus/dbus-threads.h \
+ /disconuovo/flutter-desktop-embedding/plugins/stratis_flutter/build/linux/stratis_flutter/flutter/cpp_client_wrapper/include/flutter/standard_method_codec.h \
+ /disconuovo/flutter-desktop-embedding/plugins/stratis_flutter/build/linux/stratis_flutter/flutter/cpp_client_wrapper/include/flutter/encodable_value.h \
+ /disconuovo/flutter-desktop-embedding/plugins/stratis_flutter/build/linux/stratis_flutter/flutter/cpp_client_wrapper/include/flutter/method_call.h \
+ /disconuovo/flutter-desktop-embedding/plugins/stratis_flutter/build/linux/stratis_flutter/flutter/cpp_client_wrapper/include/flutter/method_codec.h \
+ overloads.h proxy.h /usr/include/dbus-c++-1/dbus-c++/dbus.h \
+ /usr/include/dbus-c++-1/dbus-c++/types.h \
+ /usr/include/dbus-c++-1/dbus-c++/api.h \
+ /usr/include/dbus-c++-1/dbus-c++/util.h \
+ /usr/include/dbus-c++-1/dbus-c++/debug.h \
+ /usr/include/dbus-c++-1/dbus-c++/message.h \
+ /usr/include/dbus-c++-1/dbus-c++/error.h \
+ /usr/include/dbus-c++-1/dbus-c++/interface.h \
+ /usr/include/dbus-c++-1/dbus-c++/object.h \
+ /usr/include/dbus-c++-1/dbus-c++/connection.h \
+ /usr/include/dbus-c++-1/dbus-c++/pendingcall.h \
+ /usr/include/dbus-c++-1/dbus-c++/property.h \
+ /usr/include/dbus-c++-1/dbus-c++/server.h \
+ /usr/include/dbus-c++-1/dbus-c++/dispatcher.h \
+ /usr/include/dbus-c++-1/dbus-c++/eventloop.h \
+ /usr/include/dbus-c++-1/dbus-c++/eventloop-integration.h \
+ /usr/include/dbus-c++-1/dbus-c++/introspection.h \
+ /usr/include/dbus-c++-1/dbus-c++/pipe.h \
+ /disconuovo/flutter-desktop-embedding/plugins/stratis_flutter/build/linux/stratis_flutter/flutter/cpp_client_wrapper/include/flutter/method_channel.h \
+ /disconuovo/flutter-desktop-embedding/plugins/stratis_flutter/build/linux/stratis_flutter/flutter/cpp_client_wrapper/include/flutter/binary_messenger.h \
+ /disconuovo/flutter-desktop-embedding/plugins/stratis_flutter/build/linux/stratis_flutter/flutter/cpp_client_wrapper/include/flutter/engine_method_result.h \
+ /disconuovo/flutter-desktop-embedding/plugins/stratis_flutter/build/linux/stratis_flutter/flutter/cpp_client_wrapper/include/flutter/method_result.h \
+ /disconuovo/flutter-desktop-embedding/plugins/stratis_flutter/build/linux/stratis_flutter/flutter/cpp_client_wrapper/include/flutter/plugin_registrar.h
