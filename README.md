@@ -34,9 +34,6 @@ Right now the focus is on writing tests for the various Stratis features.
 
 Obviously, design/implementation ideas and documentation improvements are appreciated, especially the former, given that there are multiple ways of getting the features implemented and, at the moment, the existing ones are hacked together in the shortest time possible for lack of time to dedicate to this project.
 
-Also, the code in the repo right now (especially the Dart part) might not even be all correct, let alone good quality.
-
-
 ## Structure of the Code
 
 The code is made up of three main components:
