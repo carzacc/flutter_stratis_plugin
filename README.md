@@ -28,7 +28,9 @@ All that's left to do is to use the plugin just like any regular mobile plugin i
 
 # Contributing
 
-Contributions are welcome both for the app and the plugin. Both are at an incredibly early stage, and it would be a good idea to prioritize getting the plugin to support Stratis's features.
+Contributions are welcome both for the app and the plugin.
+
+Right now the focus is on writing tests for the various Stratis features.
 
 Obviously, design/implementation ideas and documentation improvements are appreciated, especially the former, given that there are multiple ways of getting the features implemented and, at the moment, the existing ones are hacked together in the shortest time possible for lack of time to dedicate to this project.
 
